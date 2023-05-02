@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   len.c                                              :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manykhac <manykhac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 12:18:42 by manykhac          #+#    #+#             */
-/*   Updated: 2023/05/02 12:19:59 by manykhac         ###   ########.fr       */
+/*   Created: 2023/05/02 12:13:20 by manykhac          #+#    #+#             */
+/*   Updated: 2023/05/02 12:23:54 by manykhac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
-{
-	int	c;
+#include "cub3d.h"
 
-	c = 0;
-	while (str[c])
-		c++;
-	return (c);
+void	print_close(t_addres *address, char *str)
+{
+	write(1, str, ft_strlen(str));
+	free_all(address);
 }
 
-int	matrix_len(char **str)
+int	close_game(t_addres *address)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	print_close(address, "Game closed successfully\n");
+	exit(0);
 }

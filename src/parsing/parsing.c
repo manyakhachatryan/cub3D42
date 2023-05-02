@@ -1,44 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manykhac <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/02 12:08:24 by manykhac          #+#    #+#             */
+/*   Updated: 2023/05/02 12:08:30 by manykhac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-int	count_map_len2(char *str, int j, int count)
-{
-	while (str[j])
-	{
-		if (str[j] == ' ' || str[j] == '\t' || str[j] == '\n')
-			j++;
-		else
-		{
-			count++;
-			break ;
-		}
-	}
-	return (count);
-}
-
-int	count_map_len(char *argv)
-{
-	char	*str;
-	int		fd;
-	int		count;
-	int		j;
-
-	j = 0;
-	count = 0;
-	fd = open(argv, O_RDONLY);
-	str = get_next_line(fd);
-	while (str)
-	{
-		j = 0;
-		if (count < 6)
-			count = count_map_len2(str, j, count);
-		else
-			count++;
-		free(str);
-		str = get_next_line(fd);
-	}
-	close(fd);
-	return (count);
-}
 
 int	check_map_exist(char *argv)
 {
@@ -106,11 +78,6 @@ int	parsing(int argc, char **argv, t_info **info)
 	{
 		matrix_free(gen_map);
 		return (1);
-	}
-	while (gen_map[i])
-	{
-		printf("str[%d] = %s\n", i, gen_map[i]);
-		i++;
 	}
 	matrix_free(gen_map);
 	return (0);

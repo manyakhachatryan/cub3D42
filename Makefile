@@ -7,11 +7,11 @@ NAME		= cub3d
 SRCS		= $(wildcard src/*/*.c)
 SRCS		+= $(wildcard src/*.c)
 OBJS		= $(SRCS:.c=.o)
-INCLUDES	= ./includes
-CFLAGS		= -Wall -Wextra -Werror #	-fsanitize=address
+INCLUDES	= ./includes 
+CFLAGS		= -Wall -Wextra -Werror    #	-fsanitize=address
 RM			= rm -f
 CC			= cc
-
+MLX = -lmlx -framework OpenGL -framework Appkit
 
 %.o:%.c
 	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
@@ -20,7 +20,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJS)
 		@echo $(NONE)$(BLUE) "\n\t\t🤹 Compiling $(NAME)... \n" $(NONE)
-		$(CC) $(CFLAGS) -I $(INCLUDES)  $(OBJS) -o $(NAME)
+		$(CC) $(CFLAGS) -I $(INCLUDES)  $(OBJS)  $(MLX) -o $(NAME)
 		@echo $(NONE)$(BLUE)"\n\t\t😱 Compiled   $(NAME)\n"$(NONE)
 
 clean	:

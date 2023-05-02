@@ -1,61 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_to_matrix.c                                    :+:      :+:    :+:   */
+/*   lens.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manykhac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 12:08:05 by manykhac          #+#    #+#             */
-/*   Updated: 2023/05/02 12:08:10 by manykhac         ###   ########.fr       */
+/*   Created: 2023/05/02 12:07:54 by manykhac          #+#    #+#             */
+/*   Updated: 2023/05/02 12:07:58 by manykhac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	map_to_matrix2(char *str, int i, char **map, int j)
+int	count_map_len2(char *str, int j, int count)
 {
 	while (str[j])
 	{
-		if (str[j] == ' ' || str[j] == '\t')
+		if (str[j] == ' ' || str[j] == '\t' || str[j] == '\n')
 			j++;
-		else if (str[j] != ' ' && str[j] != '\t' && str[j] != '\n')
-		{
-			map[i] = str;
-			i++;
-			break ;
-		}
 		else
 		{
-			free(str);
+			count++;
 			break ;
 		}
 	}
-	return (i);
+	return (count);
 }
 
-char	**map_to_matrix(int fd, int len)
+int	count_map_len(char *argv)
 {
-	int		i;
 	char	*str;
-	char	**map;
+	int		fd;
+	int		count;
 	int		j;
 
-	i = 0;
 	j = 0;
-	map = malloc(sizeof(char *) * (len + 1));
+	count = 0;
+	fd = open(argv, O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
 	{
 		j = 0;
-		if (i <= 6)
-			i = map_to_matrix2(str, i, map, j);
+		if (count < 6)
+			count = count_map_len2(str, j, count);
 		else
-		{
-			map[i] = str;
-			i++;
-		}
+			count++;
+		free(str);
 		str = get_next_line(fd);
 	}
-	map[i] = NULL;
-	return (map);
+	close(fd);
+	return (count);
 }
